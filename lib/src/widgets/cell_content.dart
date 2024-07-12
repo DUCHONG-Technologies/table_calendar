@@ -83,7 +83,7 @@ class CellContent extends StatelessWidget {
             duration: duration,
             margin: margin,
             padding: padding,
-            decoration: calendarStyle.selectedDecoration,
+            decoration: this.isToday ? calendarStyle.toDaySelectedDecoration : calendarStyle.selectedDecoration,
             alignment: alignment,
             child: Text(text, style: calendarStyle.selectedTextStyle),
           );
