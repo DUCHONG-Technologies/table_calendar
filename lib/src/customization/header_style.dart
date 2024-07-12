@@ -79,6 +79,9 @@ class HeaderStyle {
   /// Decoration of the header.
   final BoxDecoration decoration;
 
+  final void Function()? onLeftChevronTap;
+  final void Function()? onRightChevronTap;
+
   /// Creates a `HeaderStyle` used by `TableCalendar` widget.
   const HeaderStyle({
     this.titleCentered = false,
@@ -104,5 +107,7 @@ class HeaderStyle {
     this.leftChevronVisible = true,
     this.rightChevronVisible = true,
     this.decoration = const BoxDecoration(),
+    this.onLeftChevronTap,
+    this.onRightChevronTap,
   });
 }
