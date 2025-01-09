@@ -83,6 +83,8 @@ class HeaderStyle {
 
   final double? headerHeight;
 
+  final double? headerTitleStartPadding;
+
   /// Creates a `HeaderStyle` used by `TableCalendar` widget.
   const HeaderStyle({
     this.titleCentered = false,
@@ -111,5 +113,6 @@ class HeaderStyle {
     this.onLeftChevronTap,
     this.onRightChevronTap,
     this.headerHeight,
+    this.headerTitleStartPadding,
   });
 }
