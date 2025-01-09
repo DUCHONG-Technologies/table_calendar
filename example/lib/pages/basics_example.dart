@@ -2,6 +2,7 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:table_calendar/table_calendar.dart';
 import 'package:table_calendar_example/utils.dart';
 
@@ -28,6 +29,18 @@ class _TableBasicsExampleState extends State<TableBasicsExample> {
         lastDay: kLastDay,
         focusedDay: _focusedDay,
         calendarFormat: _calendarFormat,
+        headerStyle: HeaderStyle(
+          formatButtonVisible: false,
+          leftChevronVisible: true,
+          rightChevronVisible: true,
+          titleCentered: true,
+          leftChevronIcon: Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              IconButton(onPressed: (){}, icon: Icon(Icons.abc_outlined))
+            ],
+          )
+        ),
         selectedDayPredicate: (day) {
           // Use `selectedDayPredicate` to determine which day is currently selected.
           // If this returns true, then `day` will be marked as selected.

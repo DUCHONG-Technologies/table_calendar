@@ -6,7 +6,6 @@ import 'package:intl/intl.dart';
 import 'package:table_calendar/src/customization/header_style.dart';
 import 'package:table_calendar/src/shared/utils.dart'
     show CalendarFormat, DayBuilder;
-import 'package:table_calendar/src/widgets/custom_icon_button.dart';
 import 'package:table_calendar/src/widgets/format_button.dart';
 
 class CalendarHeader extends StatelessWidget {
@@ -46,50 +45,63 @@ class CalendarHeader extends StatelessWidget {
       decoration: headerStyle.decoration,
       margin: headerStyle.headerMargin,
       padding: headerStyle.headerPadding,
-      child: Row(
+      height: headerStyle.headerHeight ?? 60.0,
+      child: Stack(
         children: [
-          if (headerStyle.leftChevronVisible)
-            CustomIconButton(
-              icon: headerStyle.leftChevronIcon,
-              onTap: onLeftChevronTap,
-              margin: headerStyle.leftChevronMargin,
-              padding: headerStyle.leftChevronPadding,
-            ),
-          Expanded(
-            child: headerTitleBuilder?.call(context, focusedMonth) ??
-                GestureDetector(
-                  onTap: onHeaderTap,
-                  onLongPress: onHeaderLongPress,
-                  child: Text(
-                    text,
-                    style: headerStyle.titleTextStyle,
-                    textAlign: headerStyle.titleCentered
-                        ? TextAlign.center
-                        : TextAlign.start,
+          Positioned.fill(
+            child: Row(
+              // spacing between chevrons and title
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                if (headerStyle.leftChevronVisible)
+                  Container(
+                    margin: headerStyle.leftChevronMargin,
+                    padding: headerStyle.leftChevronPadding,
+                    child: headerStyle.leftChevronIcon,
                   ),
-                ),
+                if (headerStyle.rightChevronVisible)
+                  Container(
+                    margin: headerStyle.rightChevronMargin,
+                    padding: headerStyle.rightChevronPadding,
+                    child: headerStyle.rightChevronIcon,
+                  ),
+              ],
+            ),
           ),
-          if (headerStyle.formatButtonVisible &&
-              availableCalendarFormats.length > 1)
-            Padding(
-              padding: const EdgeInsets.only(left: 8.0),
-              child: FormatButton(
-                onTap: onFormatButtonTap,
-                availableCalendarFormats: availableCalendarFormats,
-                calendarFormat: calendarFormat,
-                decoration: headerStyle.formatButtonDecoration,
-                padding: headerStyle.formatButtonPadding,
-                textStyle: headerStyle.formatButtonTextStyle,
-                showsNextFormat: headerStyle.formatButtonShowsNext,
-              ),
+          Align(
+            alignment: headerStyle.titleCentered
+                ? Alignment.center
+                : Alignment.centerLeft,
+            child: Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                headerTitleBuilder?.call(context, focusedMonth) ??
+                    GestureDetector(
+                      onTap: onHeaderTap,
+                      onLongPress: onHeaderLongPress,
+                      child: Text(
+                        text,
+                        style: headerStyle.titleTextStyle,
+                        textAlign: TextAlign.center,
+                      ),
+                    ),
+                if (headerStyle.formatButtonVisible &&
+                    availableCalendarFormats.length > 1)
+                  Padding(
+                    padding: const EdgeInsets.only(left: 8.0),
+                    child: FormatButton(
+                      onTap: onFormatButtonTap,
+                      availableCalendarFormats: availableCalendarFormats,
+                      calendarFormat: calendarFormat,
+                      decoration: headerStyle.formatButtonDecoration,
+                      padding: headerStyle.formatButtonPadding,
+                      textStyle: headerStyle.formatButtonTextStyle,
+                      showsNextFormat: headerStyle.formatButtonShowsNext,
+                    ),
+                  ),
+              ],
             ),
-          if (headerStyle.rightChevronVisible)
-            CustomIconButton(
-              icon: headerStyle.rightChevronIcon,
-              onTap: onRightChevronTap,
-              margin: headerStyle.rightChevronMargin,
-              padding: headerStyle.rightChevronPadding,
-            ),
+          ),
         ],
       ),
     );
